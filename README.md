@@ -8,7 +8,12 @@ Alan Buzdar
 
 Haleigh Wright
 
-Suraj Ramjesh
+Suraj Rajesh
 
 Yantsey Tsai
 
+# Ruby Version
+2.3.1
+
+# Rails Version
+5.0.0.1
