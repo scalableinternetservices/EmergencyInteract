@@ -1,24 +1,14 @@
-# README
+# Emergency Interact
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Emergency Situation Interaction Service - emergency interaction and information service so that users can interact and share imperative information with each other - and the world - during any kind of emergency. Emergencies can be at any level - individual all the way up to huge regions. Users will be able to share text, location, photos, and videos of the emergency situation they are currently involved in and can share it with the entire world.
 
-Things you may want to cover:
+# Team Members
 
-* Ruby version
+Alan Buzdar
 
-* System dependencies
+Haleigh Wright
 
-* Configuration
+Suraj Ramjesh
 
-* Database creation
+Yantsey Tsai
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
