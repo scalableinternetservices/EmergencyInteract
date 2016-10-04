@@ -4,6 +4,8 @@ Emergency Situation Interaction Service - emergency interaction and information 
 
 # Team Members
 
+![Alan Buzdar](https://media.licdn.com/mpr/mpr/shrinknp_400_400/AAEAAQAAAAAAAAWbAAAAJGY5ODkyNzAyLTQyZWMtNDdkZi1hYzJiLTRmY2NlMjM2MmNmMw.jpg)
+
 Alan Buzdar
 
 ![Haleigh_Wright](https://cloud.githubusercontent.com/assets/17699601/19064618/43636e10-89c3-11e6-8108-e47bfb959049.jpg)
