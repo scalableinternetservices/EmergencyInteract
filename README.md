@@ -6,6 +6,8 @@ Emergency Situation Interaction Service - emergency interaction and information 
 
 Alan Buzdar
 
+![Haleigh_Wright](https://cloud.githubusercontent.com/assets/17699601/19064388/edb41e16-89c1-11e6-9fef-94fd34c522b4.jpg)
+
 Haleigh Wright
 
 Suraj Rajesh
