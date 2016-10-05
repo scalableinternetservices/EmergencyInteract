@@ -12,7 +12,7 @@ Alan Buzdar
 
 Haleigh Wright
 
-
+![Suraj Rajesh](https://media.licdn.com/media/AAEAAQAAAAAAAAfxAAAAJDYzMTRmMDc3LTgzNzctNGJiOC1iZjIzLWQzOTFiZDM1YzdmMw.jpg)
 
 Suraj Rajesh
 
