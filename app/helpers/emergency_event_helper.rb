@@ -1,0 +1,2 @@
+module EmergencyEventHelper
+end
