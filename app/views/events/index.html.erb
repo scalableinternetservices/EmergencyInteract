@@ -1,3 +1,10 @@
+<script src="//maps.google.com/maps/api/js"></script>
+<script src="//cdn.rawgit.com/mahnunchik/markerclustererplus/master/dist/markerclusterer.min.js"></script>
+
+<% content_for :javascript_includes do %>
+    <%= javascript_include_tag "events.js" %>
+<% end %>
+
 <p id="notice"><%= notice %></p>
 
 <h1>Events</h1>
@@ -33,3 +40,23 @@
 <br>
 
 <%= link_to 'New Event', new_event_path %>
+
+<div style='width: 800px;'>
+  <div id="map" style='width: 800px; height: 400px;'></div>
+</div>
+<script type="text/javascript">
+handler = Gmaps.build('Google');
+handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  markers = handler.addMarkers([
+    {
+      "lat": 34,
+      "lng": 119,
+      "infowindow": "hello!"
+    }
+  ]);
+  handler.bounds.extendWith(markers);
+  handler.fitMapToBounds();
+});
+</script>
+
+
