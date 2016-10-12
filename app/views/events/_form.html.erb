@@ -1,3 +1,8 @@
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+ <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
+ <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/dist/typeahead-addresspicker.js"></script>
+
 <%= form_for(event) do |f| %>
   <% if event.errors.any? %>
     <div id="error_explanation">
@@ -23,20 +28,52 @@
 
   <div class="field">
     <%= f.label :location %>
-    <%= f.text_field :location %>
+    <!--<%= f.text_field :location %>-->
+    <input id="address" class="typeahead" type="text" placeholder="Enter an address">
+
+
   </div>
 
-  <div class="field">
+ <!-- <div class="field">
     <%= f.label :followers %>
     <%= f.number_field :followers %>
-  </div>
+  </div> 
 
   <div class="field">
     <%= f.label :interactions %>
     <%= f.number_field :interactions %>
-  </div>
+  </div> -->
 
   <div class="actions">
     <%= f.submit %>
   </div>
 <% end %>
+
+
+<script>
+  $( function() {
+    // instantiate the addressPicker suggestion engine (based on bloodhound)
+    var addressPicker = new AddressPicker();
+
+    // instantiate the typeahead UI
+    $('#address').typeahead(null, {
+      displayKey: 'description',
+      source: addressPicker.ttAdapter()
+    });
+    addressPicker.bindDefaultTypeaheadEvent($('#address'))
+    $(addressPicker).on('addresspicker:selected', function (event, result) {
+      html = ["Address: " + result.address()]
+      html.push("Latitude: " + result.lat())
+      html.push("Longitude: " + result.lng())
+      html.push("Long names:")
+      result.addressTypes().forEach(function(type) {
+        html.push("  " + type + ": " + result.nameForType(type))
+      })
+      html.push("Short names:")
+      result.addressTypes().forEach(function(type) {
+        html.push("  " + type + ": " + result.nameForType(type, true))
+      })
+      $('#response').html( html.join('\n'))
+    })
+  })
+  </script>
