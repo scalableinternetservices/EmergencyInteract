@@ -1,56 +1,19 @@
+<!doctype html>
+<body>
+
+
+
+<input id="address" class="typeahead" type="text" placeholder="Enter an address">
+
+<h4>Reponse</h4>
+<pre id="response">
+</pre>
+
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
  <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
  <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/dist/typeahead-addresspicker.js"></script>
-
-<%= form_for(event) do |f| %>
-  <% if event.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(event.errors.count, "error") %> prohibited this event from being saved:</h2>
-
-      <ul>
-      <% event.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
-  </div>
-
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_field :description %>
-  </div>
-
-  <div class="field">
-    <%= f.label :location %>
-    <!--<%= f.text_field :location %>-->
-    <input id="address" class="typeahead" type="text" placeholder="Enter an address">
-
-
-  </div>
-
- <!-- <div class="field">
-    <%= f.label :followers %>
-    <%= f.number_field :followers %>
-  </div> 
-
-  <div class="field">
-    <%= f.label :interactions %>
-    <%= f.number_field :interactions %>
-  </div> -->
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
-
-
-<script>
+ <script>
   $( function() {
     // instantiate the addressPicker suggestion engine (based on bloodhound)
     var addressPicker = new AddressPicker();
@@ -77,3 +40,9 @@
     })
   })
   </script>
+
+</body>
+</html>
+
+
+</body>
