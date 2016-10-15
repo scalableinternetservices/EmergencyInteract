@@ -32,6 +32,10 @@ gem 'jbuilder', '~> 2.5'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 
+# For search capability
+gem 'elasticsearch-model', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+gem 'elasticsearch-rails', git: 'git://github.com/elasticsearch/elasticsearch-rails.git'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
