@@ -27,13 +27,20 @@
   </div>
 
   <div class="field">
-    <%= f.label :location %>
-    <!--<%= f.text_field :location %>-->
-    <input id="address" class="typeahead" type="text" placeholder="Enter an address">
-
-
+    <%= f.label :lat %>
+    <%= f.text_field :lat %>
   </div>
 
+  <div class="field">
+    <%= f.label :long %>
+    <%= f.text_field :long %>
+  </div>
+
+  <!--<div class="field">
+    <%= f.label :location %>
+    <input id="address" class="typeahead" type="text" placeholder="Enter an address">
+  </div>
+  -->
  <!-- <div class="field">
     <%= f.label :followers %>
     <%= f.number_field :followers %>
@@ -49,6 +56,11 @@
   </div>
 <% end %>
 
+<script>
+function getLocation() {
+  //from w3schools
+  navi
+}
 
 <script>
   $( function() {

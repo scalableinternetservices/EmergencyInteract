@@ -40,7 +40,7 @@
 <br>
 
 <%= link_to 'New Event', new_event_path %>
-
+<br>
 <div style='width: 800px;'>
   <div id="map" style='width: 800px; height: 400px;'></div>
 </div>
@@ -50,7 +50,7 @@ handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers([
     {
       "lat": 34,
-      "lng": 119,
+      "lng": -119,
       "infowindow": "hello!"
     }
   ]);
