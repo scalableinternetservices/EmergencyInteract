@@ -10,6 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+//
+//
+// app/assets/javascripts/application.js
+//= require_tree ./channels
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
