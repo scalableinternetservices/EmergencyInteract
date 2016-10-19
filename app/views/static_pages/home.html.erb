@@ -167,3 +167,23 @@ d3.json("https://bost.ocks.org/mike/leaflet/us-states.json", function(error, col
     <% end %>
   </tbody>
 </table>
+
+<div id="markers">
+
+</div>
+
+
+<script type="text/javascript">
+  App.markers = App.cable.subscriptions.create('MarkersChannel', {
+  recieved: function(data) {
+    console.log(data)
+    return $('#markers').append(this.renderMarker(data));
+  },
+
+  renderMarker: function(data) {
+    return "<p>"+ data.lat + " " + data.long + "</p>"
+  }
+});
+
+
+</script>

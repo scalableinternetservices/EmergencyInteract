@@ -1,4 +1,4 @@
-// app/assets/javascripts/channels/markers.js
+// app/assets/javascripts/channels/static_pages.js
 
 //= require cable
 //= require_self

@@ -28,14 +28,12 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+        # SET UP FOR REAL TIME
+        ActionCable.server.broadcast 'markers',
+          lat: @event.lat,
+          long: @event.long
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
-        ActionCable.server.broadcast 'events',
-          title:  event.title,
-          description:  event.description,
-          lat:  event.lat,
-          long:   event.long,
-          location:   event.location
       else
         format.html { render :new }
         format.json { render json: @event.errors, status: :unprocessable_entity }
