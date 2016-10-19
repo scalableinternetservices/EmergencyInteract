@@ -6,8 +6,16 @@
 <% end %>
 
 <p id="notice"><%= notice %></p>
+<%= link_to 'Home', events_path %></td>
 
 <h1>Events</h1>
+
+<%= form_tag events_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
 
 <table>
   <thead>
