@@ -1,4 +1,12 @@
 <p id="notice"><%= notice %></p>
+<%= link_to 'Home', events_path %></td>
+
+<%= form_tag events_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
 
 <p>
   <strong>Title:</strong>
