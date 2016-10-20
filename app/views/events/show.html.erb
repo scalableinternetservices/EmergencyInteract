@@ -33,7 +33,7 @@
   <%= @event.interactions %>
 </p> 
 
-<h2>Comments</h2>
+<strong>Comments</strong>
 <% @event.comments.each do |comment| %>
  
   <p>
@@ -41,7 +41,7 @@
   </p>
 <% end %>
  
-<h2>Add a comment:</h2>
+<strong>Add a comment:</strong>
 <%= form_for([@event, @event.comments.build]) do |f| %>
   <p>
     <%= f.label :body %><br>
