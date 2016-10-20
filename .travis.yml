@@ -2,4 +2,5 @@ language: ruby
 rvm:
   - 2.3.1
 before_script:
-  - "rake db:migrate RAILS_ENV=test"
+  - "bundle update rake"
+  - "bundle exec rake db:migrate RAILS_ENV=test"
