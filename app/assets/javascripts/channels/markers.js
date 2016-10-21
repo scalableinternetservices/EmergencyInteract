@@ -2,8 +2,8 @@
 
 App.markers = App.cable.subscriptions.create('MarkersChannel', {
 	recieved: function(data) {
-		console.log(data)
-		return $('#markers').append(this.renderMarker(data));
+		console.log(data);
+		$('markers').append("hello");
 	},
 
 	renderMarker: function(data) {

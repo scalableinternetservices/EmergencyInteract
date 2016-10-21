@@ -30,8 +30,8 @@ class EventsController < ApplicationController
       if @event.save
         # SET UP FOR REAL TIME
         ActionCable.server.broadcast 'markers',
-          lat: @event.lat,
-          long: @event.long
+          {lat: @event.lat,
+          long: @event.long}
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
