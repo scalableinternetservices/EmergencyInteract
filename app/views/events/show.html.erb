@@ -9,45 +9,43 @@
 <% end %>
 
 <p>
-  <strong>Title:</strong>
-  <%= @event.title %>
-</p>
+  <h3><%= @event.title %></h3>
+  <strong><%= @event.followers? ? @event.followers : 0 %> Followers</strong>
+  <br>
+  <strong><%= @event.interactions? ? @event.interactions : 0 %> Interactions</strong>
+  <br>
+  <br>
 
-<p>
+  <!-- pics here -->
+
+
+
   <strong>Description:</strong>
+  <br>
   <%= @event.description %>
-</p>
-
-<p>
+  <br>
+  <br>
   <strong>Location:</strong>
-  <%= @event.location %>
+  <br>
+  <%= @event.location ? @event.location : "(none provided)"%>
 </p>
 
-<p>
-  <strong>Followers:</strong>
-  <%= @event.followers %>
-</p>
-
-<p>
-  <strong>Interactions:</strong>
-  <%= @event.interactions %>
-</p> 
-
-<strong>Comments</strong>
-<% @event.comments.each do |comment| %>
  
-  <p>
-    <%= comment.body %>
-  </p>
-<% end %>
- 
-<strong>Add a comment:</strong>
+<strong>Post a comment:</strong>
 <%= form_for([@event, @event.comments.build]) do |f| %>
   <p>
     <%= f.text_area :body %>
   </p>
   <p>
     <%= f.submit %>
+  </p>
+<% end %>
+
+<strong>Comments</strong>
+<% @event.comments.each do |comment| %>
+  <p>
+    -
+    <%= comment.body %>
   </p>
 <% end %>
 
