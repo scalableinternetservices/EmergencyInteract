@@ -57,11 +57,13 @@ handler = Gmaps.build('Google');
 handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
   markers = handler.addMarkers([
     <% @events.each do |event| %>
-    {
-      "lat": <%=event.lat%>,
-      "lng": <%=event.long%>,
-      "infowindow": ""+<%=event.lat%>
-    },
+    <% if !(event.lat.nil? && event.long.nil?) %>
+      {
+        "lat": <%=event.lat%>,
+        "lng": <%=event.long%>,
+        "infowindow": ""+<%=event.lat%>
+      },
+      <% end %>
     <% end %>
   ]);
   handler.bounds.extendWith(markers);
