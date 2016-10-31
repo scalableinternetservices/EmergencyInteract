@@ -28,6 +28,12 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
+
+        # Send mail
+        User.find_each do |user|
+            EventMailer.event_created(@event.title, user.email).deliver
+        end
+
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
