@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 20161031052058) do
     t.datetime "updated_at",                     null: false
     t.float    "lat"
     t.float    "long"
+    t.binary   "image"
     t.string   "image_file_name"
     t.string   "image_content_type"
     t.integer  "image_file_size"
