@@ -25,7 +25,9 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
-    @event.location = find_region(@event.lat, @event.long)
+    if(@event.lat? && @event.long?)
+      @event.location = find_region(@event.lat, @event.long)
+    end
 
     respond_to do |format|
       if @event.save
