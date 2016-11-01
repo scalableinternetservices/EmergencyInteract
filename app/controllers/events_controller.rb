@@ -31,7 +31,9 @@ class EventsController < ApplicationController
 
         # Send mail
         User.find_each do |user|
-            EventMailer.event_created(@event.title, user.email).deliver
+            if !(@event.title.scan(/#{user.location}/i).empty? && @event.description.scan(/#{user.location}/i).empty?)
+                EventMailer.event_created(@event.title, user.email).deliver
+            end
         end
 
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
