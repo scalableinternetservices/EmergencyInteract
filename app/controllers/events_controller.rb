@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.search(params[:search])
+    @events = Event.search(params[:search]).limit(10);
   end
 
   # GET /events/1
@@ -25,9 +25,20 @@ class EventsController < ApplicationController
   # POST /events.json
   def create
     @event = Event.new(event_params)
+    if(@event.lat? && @event.long?)
+      @event.location = find_region(@event.lat, @event.long)
+    end
 
     respond_to do |format|
       if @event.save
+
+        # Send mail
+        User.find_each do |user|
+            if !(@event.title.scan(/#{user.location}/i).empty? && @event.description.scan(/#{user.location}/i).empty?)
+                EventMailer.event_created(@event.title, user.email).deliver
+            end
+        end
+
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
@@ -69,6 +80,32 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:title, :description, :lat, :long, :location)
+      params.require(:event).permit(:title, :description, :lat, :long, :location, :image)
+    end
+
+    def find_region(lat,long)
+      closest = ""
+      minDist = 99999
+
+      cities = File.read('public/cities.json')
+      citiesMap = JSON.parse(cities)
+
+      citiesMap.each do |city|
+        dist = haversineDist(lat,long,city['latitude'],city['longitude'])
+        if dist < minDist
+          minDist = dist
+          closest = city['city']
+        end
+      end
+
+      closest
+    end
+
+    def haversineDist(lat1,long1,lat2,long2)
+      lat1 = lat1*Math::PI/180
+      lat2 = lat2*Math::PI/180
+      long1 = long1*Math::PI/180
+      long2 = long2*Math::PI/180
+      (1-Math.cos(lat2-lat1))/2 + Math.cos(lat1)*Math.cos(lat2)*((1-Math.cos(long2-long1))/2)
     end
 end
