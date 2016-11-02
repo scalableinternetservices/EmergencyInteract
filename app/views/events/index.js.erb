@@ -1,0 +1,15 @@
+
+$('#events-table-body').html("<%= j render partial: 'events/eventrow', :collection => @events, :as => :event %>")
+handler.removeMarkers(markers);
+markers = handler.addMarkers([
+    <% @events.each do |event| %>
+      <% if !(event.lat.nil? && event.long.nil?) %>
+        {
+          "lat": <%=event.lat%>,
+          "lng": <%=event.long%>,
+          "infowindow": "<%=event.title%>"
+        },
+      <% end %>
+    <% end %>
+  ]);
+EventPoller.poll();

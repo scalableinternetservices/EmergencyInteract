@@ -17,8 +17,9 @@
   </p>
 <% end %>
 
-<table>
-  <thead>
+<div id="events" data-url="<%= %>">
+<table id="events-table">
+  <thead id="events-table-head">
     <tr>
       <th>Title</th>
       <th>Description</th>
@@ -29,46 +30,16 @@
     </tr>
   </thead>
 
-  <tbody>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= event.title %></td>
-        <td><%= event.description %></td>
-        <td><%= event.location %></td>
-        <td><%= event.followers %></td>
-        <td><%= event.interactions %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
+  <tbody id="events-table-body">
+  <%= render partial: "events/eventrow", :collection => @events, :as => :event %>
   </tbody>
-</table>
 
+</table>
+</div>
 <br>
 
 <%= link_to 'New Event', new_event_path %>
 <br>
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
-</div>
-<script type="text/javascript">
-handler = Gmaps.build('Google');
-handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-  markers = handler.addMarkers([
-    <% @events.each do |event| %>
-    <% if !(event.lat.nil? && event.long.nil?) %>
-      {
-        "lat": <%=event.lat%>,
-        "lng": <%=event.long%>,
-        "infowindow": ""+<%=event.lat%>
-      },
-      <% end %>
-    <% end %>
-  ]);
-  handler.bounds.extendWith(markers);
-  handler.fitMapToBounds();
-});
-</script>
 
+<%= render partial: "events/map", :events => @events %>
 
