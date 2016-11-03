@@ -5,3 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+Event.destroy_all
+
+100.times do |index|
+  Event.create!(title: "Title #{index}",
+                description: "Description #{index}",
+                location: "location #{index}",
+                interactions: 5)
+end
+
+p "Created #{Event.count} events"
