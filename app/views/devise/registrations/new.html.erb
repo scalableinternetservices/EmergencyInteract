@@ -30,16 +30,9 @@
     <%= f.label :location %><br />
     <script type="text/javascript">
       function foo(){
-        alert('got here')
-        // var xobj = new XMLHttpRequest();
-        // xobj.overrideMimeType("public/cities.json");
-
-        $.getJSON( "~/public/cities.json", function(json){
-          alert(json[0].city)
-        });
-        //var json = require('http://public/cities.json')
-        //cities = JSON.parse(json)
-        //alert(cities[0]['city'])
+        //var typed = $("#user_location").text()
+        var typed = <%= params[:location]%>
+        console.log("input: "+typed)
         var cities = ["New York",
                       "Los Angeles",
                       "Chicago",
@@ -1040,7 +1033,13 @@
                       "Spanish Fork",
                       "Beloit",
                       "Panama City"]
-
+        for(city in cities){
+          var cityName = String(cities[city])
+          var prefix = "New"//String(typed)
+          if(cityName.startsWith(prefix)) {
+            console.log("MATCH: " + cityName + " with prefix " + prefix)
+          }
+        }
       }
     </script>
     <%= f.text_field :location, autofocus: true %>
