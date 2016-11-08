@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :subscriptions
   devise_for :users, controllers: { registrations: "registrations" }
   get '/home',	to: 'static_pages#home'
 

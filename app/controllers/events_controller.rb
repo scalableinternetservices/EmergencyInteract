@@ -4,7 +4,16 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.search(params[:search]).limit(10).order("id desc");
+    if user_signed_in?
+      locations = Subscription.where(:user_id => current_user.id).pluck("city")
+      if locations.count > 0
+        @events = Event.search(params[:search]).where(location: locations).order("id desc").limit(10);
+      else
+        @events = Event.search(params[:search]).order("id desc").limit(10);
+      end
+    else
+      @events = Event.search(params[:search]).order("id desc").limit(10);
+    end
   end
 
   # GET /events/1
