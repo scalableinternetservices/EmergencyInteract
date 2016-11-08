@@ -4,7 +4,11 @@ class SubscriptionsController < ApplicationController
   # GET /subscriptions
   # GET /subscriptions.json
   def index
-    @subscriptions = Subscription.where(:user_id => current_user.id)
+    if user_signed_in?
+      @subscriptions = Subscription.where(:user_id => current_user.id)
+    else
+      @subscriptions = Subscription.all
+    end
   end
 
   # GET /subscriptions/1
