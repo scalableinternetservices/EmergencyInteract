@@ -15,14 +15,6 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should create subscription" do
-    assert_difference('Subscription.count') do
-      post subscriptions_url, params: { subscription: { city: @subscription.city, user_id: @subscription.user_id } }
-    end
-
-    assert_redirected_to subscription_url(Subscription.last)
-  end
-
   test "should show subscription" do
     get subscription_url(@subscription)
     assert_response :success
@@ -32,5 +24,5 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     get edit_subscription_url(@subscription)
     assert_response :success
   end
-  
+
 end
