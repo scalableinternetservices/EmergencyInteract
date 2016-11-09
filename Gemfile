@@ -34,9 +34,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 
-# For Polling
-gem 'message_bus'
-gem 'message_bus-client'
 
 # For Authentication
 gem 'devise', '~> 4.2'
