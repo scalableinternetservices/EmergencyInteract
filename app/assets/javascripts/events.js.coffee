@@ -8,8 +8,4 @@
     setTimeout @request, 3000
 
   request: ->
-    $.get({ url: $('#events').data('url'), dataType: 'script' })
-
-turbolinks:load = ->
-	if $('#events').length > 0
-	  EventPoller.poll()
+    $.get({ url: $('#events').data('url'), dataType: 'script'})

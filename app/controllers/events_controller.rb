@@ -1,10 +1,11 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
 
+ 
   # GET /events
   # GET /events.json
   def index
-    @events = Event.search(params[:search]).limit(10);
+    @events = Event.search(params[:search]).limit(10).order(id: :desc);
   end
 
   # GET /events/1
