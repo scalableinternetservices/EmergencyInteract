@@ -5,7 +5,16 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.search(params[:search]).limit(10).order(id: :desc);
+    if user_signed_in?
+      locations = Subscription.where(:user_id => current_user.id).pluck("city")
+      if locations.count > 0
+        @events = Event.search(params[:search]).where(location: locations).order("id desc").limit(10);
+      else
+        @events = Event.search(params[:search]).order("id desc").limit(10);
+      end
+    else
+      @events = Event.search(params[:search]).order("id desc").limit(10);
+    end
   end
 
   # GET /events/1
@@ -32,14 +41,6 @@ class EventsController < ApplicationController
 
     respond_to do |format|
       if @event.save
-
-        # Send mail
-        User.find_each do |user|
-            if !(@event.title.scan(/#{user.location}/i).empty? && @event.description.scan(/#{user.location}/i).empty?)
-                EventMailer.event_created(@event.title, user.email).deliver
-            end
-        end
-
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render :show, status: :created, location: @event }
       else
