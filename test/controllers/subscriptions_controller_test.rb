@@ -32,17 +32,5 @@ class SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     get edit_subscription_url(@subscription)
     assert_response :success
   end
-
-  test "should update subscription" do
-    patch subscription_url(@subscription), params: { subscription: { city: @subscription.city, user_id: @subscription.user_id } }
-    assert_redirected_to subscription_url(@subscription)
-  end
-
-  test "should destroy subscription" do
-    assert_difference('Subscription.count', -1) do
-      delete subscription_url(@subscription)
-    end
-
-    assert_redirected_to subscriptions_url
-  end
+  
 end
