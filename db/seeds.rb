@@ -38,8 +38,8 @@ delta = (end_long - start_long)/100
   long = start_long + index*delta
   lat = rand(low_lat..high_lat)
 
-  Event.create!(title: "Title #{index}",
-                description: "Director #{index}",
+  Event.create!(title: "event #{index}",
+                description: "description #{index}",
                 location: find_region(lat,long),
                 lat: lat,
                 long: long)
