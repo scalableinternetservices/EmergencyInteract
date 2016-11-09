@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'gmaps4rails'
 gem 'underscore-rails'
 
+
 # For Authentication
 gem 'devise', '~> 4.2'
 

@@ -1,15 +1,30 @@
+tbl = document.getElementById("events-table");
+t = $('#events-table-body').find('tr');
 
-$('#events-table-body').html("<%= j render partial: 'events/eventrow', :collection => @events, :as => :event %>")
-handler.removeMarkers(markers);
-markers = handler.addMarkers([
-    <% @events.each do |event| %>
-      <% if !(event.lat.nil? && event.long.nil?) %>
-        {
-          "lat": <%=event.lat%>,
-          "lng": <%=event.long%>,
-          "infowindow": "<%=event.title%>"
-        },
-      <% end %>
-    <% end %>
-  ]);
-EventPoller.poll();
+
+if(t[0].id != "<%= @events[0].id %>")
+{
+  //$('#events-table-body tr#'+t[9].id).remove();
+  while (tbl.length > 10)
+  {
+    tbl.deleteRow(tbl.length-1);
+  }
+  
+  row = tbl.insertRow(0);
+  row.id = "<%= @events[0].id %>";
+  (row.insertCell(0)).innerHTML = "<%= @events[0].title %>";
+  (row.insertCell(1)).innerHTML = "<%= @events[0].description %>";
+  (row.insertCell(2)).innerHTML = "<%= @events[0].location %>";
+  (row.insertCell(3)).innerHTML = "<%= @events[0].followers %>";
+  (row.insertCell(4)).innerHTML = "<%= @events[0].interactions %>";
+  (row.insertCell(5)).innerHTML = "<%= escape_javascript link_to 'Show', @events[0]%>";
+  (row.insertCell(6)).innerHTML = "<%= escape_javascript link_to 'Edit', edit_event_path(@events[0]) %>";
+  (row.insertCell(7)).innerHTML = "<%= escape_javascript link_to 'Destroy', @events[0], method: :delete, data: { confirm: 'Are you sure?' } %>";
+
+
+  EventPoller.poll();
+}
+else
+{
+  EventPoller.poll();
+}
