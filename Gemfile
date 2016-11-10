@@ -33,7 +33,7 @@ gem 'jbuilder', '~> 2.5'
 # For our Map
 gem 'gmaps4rails'
 gem 'underscore-rails'
-
+gem 'aws-sdk', '~> 2.3'
 
 # For Authentication
 gem 'devise', '~> 4.2'
