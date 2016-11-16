@@ -1,16 +1,24 @@
 tbl = document.getElementById("events-table");
 t = $('#events-table-body').find('tr');
 
+x = tbl.rows[1].id;
+y = t[0].id;
 
-if(t[0].id != "<%= @events[0].id %>")
+console.log("y "+y);
+console.log("x "+x);
+
+if(tbl.rows[1].id != "<%= @events[0].id %>")
 {
   //$('#events-table-body tr#'+t[9].id).remove();
-  while (tbl.length > 10)
+  while (tbl.rows.length > 10)
   {
-    tbl.deleteRow(tbl.length-1);
+    console.log(""+tbl.rows.length);
+    tbl.deleteRow(tbl.rows.length-1);
   }
+
+  console.log(""+tbl.rows[1].id);
   
-  row = tbl.insertRow(0);
+  row = tbl.insertRow(1);
   row.id = "<%= @events[0].id %>";
   (row.insertCell(0)).innerHTML = "<%= @events[0].title %>";
   (row.insertCell(1)).innerHTML = "<%= @events[0].description %>";
@@ -22,9 +30,6 @@ if(t[0].id != "<%= @events[0].id %>")
   (row.insertCell(7)).innerHTML = "<%= escape_javascript link_to 'Destroy', @events[0], method: :delete, data: { confirm: 'Are you sure?' } %>";
 
 
-  EventPoller.poll();
 }
-else
-{
-  EventPoller.poll();
-}
+
+EventPoller.poll();
