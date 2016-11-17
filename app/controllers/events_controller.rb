@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  CITIESMAP = JSON.parse(File.read('public/cities.json'))
 
  
   # GET /events
@@ -88,10 +89,7 @@ class EventsController < ApplicationController
     def find_region(lat,long)
       closest = ""
       minDist = 99999
-
-      cities = File.read('public/cities.json')
-      citiesMap = JSON.parse(cities)
-
+      citiesMap = EventsController::CITIESMAP
       citiesMap.each do |city|
         dist = haversineDist(lat,long,city['latitude'],city['longitude'])
         if dist < minDist
