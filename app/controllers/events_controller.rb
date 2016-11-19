@@ -9,12 +9,18 @@ class EventsController < ApplicationController
     if user_signed_in?
       locations = Subscription.where(:user_id => current_user.id).pluck("city")
       if locations.count > 0
-        @events = Event.search(params[:search]).where(location: locations).order("id desc").limit(10);
+        @events = Rails.cache.fetch(locations, expires_in: 2.seconds) do
+           Event.search(params[:search]).where(location: locations).order("id desc").limit(10)
+        end
       else
-        @events = Event.search(params[:search]).order("id desc").limit(10);
+        @events = Rails.cache.fetch("all", expires_in: 2.seconds) do
+          Event.search(params[:search]).order("id desc").limit(10);
+        end
       end
     else
-      @events = Event.search(params[:search]).order("id desc").limit(10);
+      @events = Rails.cache.fetch("all", expires_in: 2.seconds) do
+        Event.search(params[:search]).order("id desc").limit(10)
+      end
     end
   end
 
