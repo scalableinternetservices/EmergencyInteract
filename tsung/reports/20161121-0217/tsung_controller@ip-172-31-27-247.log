@@ -1,0 +1,112 @@
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) Config server started, logdir is "/home/ec2-user/.tsung/log/20161121-0217"
+ 
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+              ts_mon:(5:<0.54.0>) starting monitor, global 
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+           ts_config:(5:<0.72.0>) Reading config file: asdf.xml
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+      ts_config_http:(4:<0.72.0>) Get user agent: 100 "Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4" 
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+           ts_config:(5:<0.72.0>) Session name for id 1 is "post-test"
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(4:<0.72.0>) SYSINFO:Tsung version: 1.6.0
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(4:<0.72.0>) SYSINFO:Erlang version: Erlang R14B04 (erts-5.8.5) [source] [64-bit] [rq:1] [async-threads:8] [kernel-poll:true]
+
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(4:<0.72.0>) SYSINFO:System architecture x86_64-redhat-linux-gnu
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(4:<0.72.0>) SYSINFO:Current path: /usr/lib/erlang/lib/tsung-1.6.0/ebin/tsung.beam
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+              ts_mon:(5:<0.73.0>) Activate clients with text backend
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+              ts_mon:(5:<0.73.0>) Starting tsung clients on hosts: [localhost]
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) Start a launcher on the controller beam localhost
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+  ts_launcher_static:(5:<0.128.0>) Launch msg receive ("localhost")
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+         ts_launcher:(5:<0.129.0>) Launch msg receive ("localhost")
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) All remote beams started, syncing 
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) Undefined ports_range config 
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) New arrival phase 1 for client "localhost" (last ? true): will start 900 users
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) New arrival phase 2 for client "localhost" (last ? true): will start 3000 users
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+    ts_config_server:(5:<0.72.0>) New arrival phase 3 for client "localhost" (last ? true): will start 900 users
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+         ts_launcher:(5:<0.129.0>) Expected duration of first phase: 60.0 sec (900 users) 
+
+=INFO REPORT==== 21-Nov-2016::02:17:53 ===
+         ts_launcher:(5:<0.129.0>) Activate launcher (900 users) in 504 msec 
+
+=INFO REPORT==== 21-Nov-2016::02:18:54 ===
+         ts_launcher:(5:<0.129.0>) Phase duration exceeded, but not all users were launched (11 users, 1.2% of phase)
+
+=INFO REPORT==== 21-Nov-2016::02:18:54 ===
+         ts_launcher:(5:<0.129.0>) Start a new arrival phase (3000 users, 0.025); expected duration=120.0 sec
+
+=INFO REPORT==== 21-Nov-2016::02:20:48 ===
+           ts_search:(5:<0.3339.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:48 ===
+           ts_search:(5:<0.3570.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:50 ===
+           ts_search:(5:<0.3501.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:50 ===
+           ts_search:(5:<0.3479.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:50 ===
+           ts_search:(5:<0.3327.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:50 ===
+           ts_search:(5:<0.3580.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:51 ===
+           ts_search:(5:<0.3597.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:51 ===
+           ts_search:(5:<0.3583.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:51 ===
+           ts_search:(5:<0.3296.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:20:54 ===
+         ts_launcher:(5:<0.129.0>) Phase duration exceeded, but not all users were launched (139 users, 4.6% of phase)
+
+=INFO REPORT==== 21-Nov-2016::02:20:54 ===
+         ts_launcher:(5:<0.129.0>) Start a new arrival phase (900 users, 0.015); expected duration=60.0 sec
+
+=INFO REPORT==== 21-Nov-2016::02:20:54 ===
+           ts_search:(5:<0.3672.0>) Dyn Var (RE): no Match (varname=authenticity_token), 
+
+=INFO REPORT==== 21-Nov-2016::02:21:53 ===
+         ts_launcher:(5:<0.129.0>) This was the last phase, wait for connected users to finish their session
+
+=INFO REPORT==== 21-Nov-2016::02:26:08 ===
+     ts_launcher_mgr:(5:<0.123.0>) No more active users 'tsung_controller@ip-172-31-27-247' "10229"
