@@ -17,6 +17,9 @@
     <arrivalphase phase="1" duration="100" unit="second">
       <users arrivalrate="1" unit="second"></users>
     </arrivalphase>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users arrivalrate="2" duration="second" unit="second"></users>
+    </arrivalphase>
   </load>
 
   <options>
@@ -29,12 +32,18 @@
   </options>
 
   <sessions>
-    <session name="post-test" probability="100" type="ts_http">
+    <session name="new-events-test" probability="100" type="ts_http">
+
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
 
       <request>
         <dyn_variable name='authenticity_token'></dyn_variable>
         <http url='/events/new' version='1.1' method='GET'></http>
       </request>
+
+      <thinktime value="30" random="true"></thinktime>
 
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
@@ -46,8 +55,37 @@
       <request subst="true">
           <http url='/events' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=Test&amp;event[description]=Testing&amp;event[lat]=34.4208&amp;event[long]=119.6982" content_type="application/x-www-form-urlencoded"> </http>
       </request>
+
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
     </session>
+
+    <session name="new-comments test" probability="0" type="ts_http">
+
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+
+      <request>
+        <http url='/events/1' method='GET' version="1.1"></http>
+      </request>
+
+      <thinktime value="20" random="true"></thinktime>
+
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+
+      <request subst="true">
+          <http url='/events/1' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=Hello&amp;comment[event_id]=1" content_type="application/x-www-form-urlencoded"> </http>
+      </request>
+
+    </session>
+
   </sessions>
 
 </tsung>
-
