@@ -107,12 +107,6 @@ psv(name+".txt", function(error, data) {
         .style("text-anchor", "middle")
         .text("number/sec");
 
-    svg.append("text")
-        .attr("transform", "translate(" + (width+3) + "," + y(data[0].time) + ")")
-        .attr("dy", ".35em")
-        .attr("text-anchor", "start")
-        .style("fill", ""+colors[i])
-        .text("200");
     }
 
     // Add the valueline path.  
@@ -120,6 +114,13 @@ psv(name+".txt", function(error, data) {
         .attr("class", "line")
         .style("stroke", ""+colors[i])
         .attr("d", valueline(data));
+
+    svg.append("text")
+        .attr("transform", "translate(" + (width-20) + "," + (height-50-i*12) + ")")
+        .attr("dy", ".35em")
+        .attr("text-anchor", "start")
+        .style("fill", ""+colors[i])
+        .text(filenames[i]);
 
 i++;
 
