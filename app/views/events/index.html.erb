@@ -42,7 +42,7 @@
   </thead>
 
   <tbody id="events-table-body">
-  <%= render partial: "events/eventrow", :collection => @events, :as => :event %>
+  <%= render partial: "events/eventrow", :collection => @events, cached: true, :as => :event %>
   </tbody>
 
 </table>
