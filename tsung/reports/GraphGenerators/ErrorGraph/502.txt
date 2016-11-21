@@ -1,0 +1,2 @@
+time rate amt
+486 0.1 1
