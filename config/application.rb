@@ -16,8 +16,8 @@ module EmergencyInteract
         :address => 'smtp.gmail.com',
         :domain => 'mail.google.com',
         :port => 587,
-        :user_name => "emergencyinteract.ucsb@gmail.com",
-        :password => "cs291ahsy",
+        :user_name => "********",
+        :password => "********",
         :authentication => 'login',
         :enable_starttls_auto => true
      }   
