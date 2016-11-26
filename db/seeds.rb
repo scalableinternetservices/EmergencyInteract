@@ -1,48 +1,63 @@
+users = []
+subscriptions = []
+events = []
+comments = []
 
-def find_region(lat,long)
-  closest = ""
-  minDist = 99999
-  cities = File.read('public/cities.json')
-  citiesMap = JSON.parse(cities)
-  citiesMap.each do |city|
-    dist = haversineDist(lat,long,city['latitude'],city['longitude'])
-    if dist < minDist
-      minDist = dist
-      closest = city['city']
-    end
-  end
-  closest
-end
-def haversineDist(lat1,long1,lat2,long2)
-  lat1 = lat1*Math::PI/180
-  lat2 = lat2*Math::PI/180
-  long1 = long1*Math::PI/180
-  long2 = long2*Math::PI/180
-  (1-Math.cos(lat2-lat1))/2 + Math.cos(lat1)*Math.cos(lat2)*((1-Math.cos(long2-long1))/2)
-end
-
-
-
-
-
+User.destroy_all
+Subscription.destroy_all
 Event.destroy_all
+Comment.destroy_all
 
-low_lat = 24.0
-high_lat = 48.0
-start_long = -120.0
-end_long = -70.0
+CITIESMAP = JSON.parse(File.read('public/cities.json'))
 
-delta = (end_long - start_long)/100
+pw = User.new(:password => "qwerty").encrypted_password
 
-100.times do |index|
-  long = start_long + index*delta
-  lat = rand(low_lat..high_lat)
 
-  Event.create!(title: "event #{index}",
-                description: "description #{index}",
-                location: find_region(lat,long),
-                lat: lat,
-                long: long)
+1000.times do |n|
+	users << "(#{n}, '#{n}@test.com', '#{pw}', '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
+	if n%2 == 0
+		subscriptions << "('New York', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
+	else
+		subscriptions << "('Los Angeles', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
+	end
 end
 
-p "Created #{Event.count} movies"
+10000.times do |n|
+	if n%3 == 0
+		events << "('Title #{n}', 'Description #{n}', 'Los Angeles', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 34.0522342, -118.2436849)"
+		if n%2 == 0
+			500.times do |k|
+				comments << "('Body #{k} 1', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
+			end
+		end
+	else
+		events << "('Title #{n}', 'Description #{n}', 'New York', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 41.8781136, -87.6297982)"
+		if n%2 == 0
+			500.times do |k|
+				comments << "('Body #{k} 1', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
+			end
+		end
+	end
+end
+
+
+User.transaction do
+	User.connection.execute "INSERT INTO users (id, email, encrypted_password, created_at, updated_at) VALUES #{users.join(', ')}"
+	puts "added #{users.count} users to database"
+end
+
+Subscription.transaction do
+	Subscription.connection.execute "INSERT INTO subscriptions (city, user_id, created_at, updated_at) VALUES #{subscriptions.join(', ')}"
+	puts "added #{subscriptions.count} subscriptions to database"
+end
+
+Event.transaction do
+	Event.connection.execute "INSERT INTO events (title, description, location, created_at, updated_at, lat, long) VALUES #{events.join(', ')}"
+	puts "added #{events.count} events to database"
+end
+
+Comment.transaction do
+	Comment.connection.execute "INSERT INTO comments (body, event_id, created_at, updated_at) VALUES #{comments.join(', ')}"
+	puts "added #{comments.count} comments to database"
+end
+
