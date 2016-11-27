@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   CITIESMAP = JSON.parse(File.read('public/cities.json'))
-
+  protect_from_forgery :except => [:create]
  
   # GET /events
   # GET /events.json

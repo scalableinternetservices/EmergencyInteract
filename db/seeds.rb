@@ -3,10 +3,10 @@ subscriptions = []
 events = []
 comments = []
 
-User.destroy_all
 Subscription.destroy_all
-Event.destroy_all
+User.destroy_all
 Comment.destroy_all
+Event.destroy_all
 
 CITIESMAP = JSON.parse(File.read('public/cities.json'))
 
@@ -22,18 +22,18 @@ pw = User.new(:password => "qwerty").encrypted_password
 	end
 end
 
-10000.times do |n|
+1000.times do |n|
 	if n%3 == 0
-		events << "('Title #{n}', 'Description #{n}', 'Los Angeles', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 34.0522342, -118.2436849)"
+		events << "(#{n}, 'Title #{n}', 'Description #{n}', 'Los Angeles', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 34.0522342, -118.2436849)"
 		if n%2 == 0
-			500.times do |k|
+			200.times do |k|
 				comments << "('Body #{k} 1', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
 			end
 		end
 	else
-		events << "('Title #{n}', 'Description #{n}', 'New York', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 41.8781136, -87.6297982)"
+		events << "(#{n}, 'Title #{n}', 'Description #{n}', 'New York', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 41.8781136, -87.6297982)"
 		if n%2 == 0
-			500.times do |k|
+			200.times do |k|
 				comments << "('Body #{k} 1', #{n}, '2016-11-23 20:21:13', '2016-11-23 20:21:13')"
 			end
 		end
@@ -52,7 +52,7 @@ Subscription.transaction do
 end
 
 Event.transaction do
-	Event.connection.execute "INSERT INTO events (title, description, location, created_at, updated_at, lat, long) VALUES #{events.join(', ')}"
+	Event.connection.execute "INSERT INTO events (id, title, description, location, created_at, updated_at, lat, long) VALUES #{events.join(', ')}"
 	puts "added #{events.count} events to database"
 end
 

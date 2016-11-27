@@ -19,6 +19,8 @@ gem 'coffee-rails', '~> 4.2'
 
 gem 'paperclip'
 
+gem 'dalli'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makefs navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
