@@ -20,6 +20,7 @@ gem 'coffee-rails', '~> 4.2'
 gem 'paperclip'
 
 gem 'dalli'
+gem 'dalli-elasticache'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
