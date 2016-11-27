@@ -22,7 +22,7 @@ pw = User.new(:password => "qwerty").encrypted_password
 	end
 end
 
-10000.times do |n|
+1000.times do |n|
 	if n%3 == 0
 		events << "('Title #{n}', 'Description #{n}', 'Los Angeles', '2016-11-23 20:21:13', '2016-11-23 20:21:13', 34.0522342, -118.2436849)"
 		if n%2 == 0
