@@ -1,0 +1,57 @@
+<?xml version="1.0"?><tsung loglevel="notice" version="1.0">
+
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers="15000"/>
+  </clients>
+
+  <servers>
+      <server host="www.emergencyinteract-latest.zgxk8jxz26.us-west-2.elasticbeanstalk.com" port="80" type="tcp"/>
+  </servers>
+
+
+  <load>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users arrivalrate="1" unit="second"/>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <option name="global_ack_timeout" value="2000"/>
+
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+
+  <sessions>
+    <session name="sign_in_view_events" probability="100" type="ts_http">
+
+      <request>
+        <dyn_variable name="authenticity_token"/>
+        <http url="/users/sign_in" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                         {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),                         re:replace(Val,&quot;[+]&quot;,&quot;%2B&quot;,[global, {return,list}]) end.">
+        <var name="authenticity_token"/>
+      </setdynvars> 
+
+      <request subst="true">
+          <http url="/users/sign_in" method="POST" version="1.1" contents="authenticity_token=%%_authenticity_token%%&amp;user[email]=tester@test.com&amp;user[password]=tester&amp;user[remember_me]=0" content_type="application/x-www-form-urlencoded"> </http>
+      </request>
+
+      <request>
+        <dyn_variable name="authenticity_token"/>
+        <http url="/events/new" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                         {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),                         re:replace(Val,&quot;[+]&quot;,&quot;%2B&quot;,[global, {return,list}]) end.">
+        <var name="authenticity_token"/>
+      </setdynvars> 
+
+      <request subst="true">
+          <http url="/events" method="POST" version="1.1" contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=Signed-in-event&amp;event[description]=Description&amp;event[lat]=34.4208&amp;event[long]=119.6982" content_type="application/x-www-form-urlencoded"> </http>
+      </request>
+    </session>
+  </sessions>
+
+</tsung>
