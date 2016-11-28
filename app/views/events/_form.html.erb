@@ -3,6 +3,8 @@
  <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/bower_components/typeahead.js/dist/typeahead.bundle.js"></script>
  <script src="https://rawgithub.com/sgruhier/typeahead-addresspicker/master/dist/typeahead-addresspicker.js"></script>
 
+ <% cache(cache_key_for_newevent_form) do %>
+
 <%= form_for(event) do |f| %>
   <% if event.errors.any? %>
     <div id="error_explanation">
@@ -40,6 +42,8 @@
     <%= f.label :image %>
     <%= f.file_field :image %>
   </div>
+
+  <% end %> <!--end cache block-->
 
   <!--<div class="field">
     <%= f.label :location %>

@@ -5,6 +5,7 @@ class EventsController < ApplicationController
  
   # GET /events
   # GET /events.json
+
   def index
     if user_signed_in?
       locations = Subscription.where(:user_id => current_user.id).pluck("city")
