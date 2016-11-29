@@ -34,41 +34,41 @@
 
   <sessions>
     <!-- 
-    80% read
-        20% sign in & subscribe (all 20% sub to SB)
-            34% read HOME PAGE
-            33% read SPECIFIC EVENT (id 50)
-            33% read RANDOM EVENT
-        80% dont sign in
-            34% read HOME PAGE
-            33% read SPECIFIC EVENT (id 50)
-            33% read RANDOM EVENT
-    20% write
-        10% create EVENT
-            50% create event in NEW YORK
-            17% create event in LA
-            17% create event in SB
-            16% create event in SF
-        45% comment on SPECIFIC EVENT (id 50)
-        45% comment on RANDOM EVENT -->
-    <!-- asdf -->
+    read (80 total)
+        sign in & subscribe
+            read HOME PAGE - 5
+            read SPECIFIC EVENT - 5
+            read RANDOM EVENT - 6
+        dont sign in
+            read HOME PAGE - 22
+            read SPECIFIC EVENT - 21
+            read RANDOM EVENT - 21
+    write (20 total)
+        create EVENT
+            create event in NEW YORK - 3
+            create event in LA - 1
+            create event in SB - 1
+            create event in SF - 1
+        comment on SPECIFIC EVENT - 7
+        comment on RANDOM EVENT - 7
+    -->
 
     <!-- READ & SIGN IN -->
-    <session name="read-subToSB-readhome" probability="5.44" type="ts_http">
+    <session name="read-subToSB-readhome" probability="5" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
     </session>
     
-    <session name="read-subToSB-readspecific" probability="5.28" type="ts_http">
+    <session name="read-subToSB-readspecific" probability="5" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
     </session>
     
-    <session name="read-subToSB-readrand" probability="5.28" type="ts_http">
+    <session name="read-subToSB-readrand" probability="6" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -76,13 +76,13 @@
     </session>
 
     <!-- READ & DONT SIGN IN -->
-    <session name="read-readhome" probability="21.76" type="ts_http">
+    <session name="read-readhome" probability="22" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
     </session>
     
-    <session name="read-readspecific" probability="21.12" type="ts_http">
+    <session name="read-readspecific" probability="21" type="ts_http">
       <!-- visit home then go to specific event -->
       <request>
           <http url='/' method='GET' version='1.1'> </http>
@@ -93,7 +93,7 @@
       </request>
     </session>
     
-    <session name="read-readrand" probability="21.12" type="ts_http">
+    <session name="read-readrand" probability="21" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -116,7 +116,7 @@
 
 
     <!-- WRITE -->
-    <session name="write-createevent-NYhotspot" probability="1" type="ts_http">
+    <session name="write-createevent-NYhotspot" probability="3" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -136,7 +136,7 @@
       </request>
     </session>
 
-    <session name="write-createevent-LA" probability="0.34" type="ts_http">
+    <session name="write-createevent-LA" probability="1" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -156,7 +156,7 @@
       </request>
     </session>
 
-    <session name="write-createevent-SB" probability="0.34" type="ts_http">
+    <session name="write-createevent-SB" probability="1" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -176,7 +176,7 @@
       </request>
     </session>
 
-    <session name="write-createevent-SF" probability="0.32" type="ts_http">
+    <session name="write-createevent-SF" probability="1" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
@@ -196,18 +196,45 @@
       </request>
     </session>
 
-    <session name="write-commentspecific" probability="9" type="ts_http">
+    <session name="write-commentspecific" probability="7" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <http url='/events/50' method='GET' version="1.1"></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+      <request subst="true">
+          <http url='/events/50' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent&amp;comment[event_id]=50" content_type="application/x-www-form-urlencoded"> </http>
+      </request>
     </session>
 
-    <session name="write-commentrand" probability="9" type="ts_http">
+    <session name="write-commentrand" probability="7" type="ts_http">
       <request>
           <http url='/' method='GET' version='1.1'> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <http url='/events/50' method='GET' version="1.1"></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars>
+      <setdynvars sourcetype="random_number" start="1" end="100">
+        <var name="rndint" />
+      </setdynvars>
+      <request subst="true">
+          <http url='/events/%%_rndint%%' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent&amp;comment[event_id]=%%_rndint%%" content_type="application/x-www-form-urlencoded"> </http>
+      </request>
     </session>
 
 
