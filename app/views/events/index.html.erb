@@ -16,7 +16,6 @@
 <% end %>
 
 <p id="notice"><%= notice %></p>
-<%= link_to 'Home', events_path %></td>
 
 <h1>Events</h1>
 
@@ -29,7 +28,7 @@
 
 
 <div id="events" data-url="<%= %>">
-<table id="events-table">
+    <table id="events-table" style="width: 100%;">
   <thead id="events-table-head">
     <tr>
       <th>Title</th>
@@ -49,7 +48,7 @@
 </div>
 <br>
 
-<%= link_to 'New Event', new_event_path %>
-<br>
+<%= link_to 'New Event', new_event_path, :class => 'btn-lg btn-primary' %>
+<br />
 
 <%= render partial: "events/map", :events => @events %>
