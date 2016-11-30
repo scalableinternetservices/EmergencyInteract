@@ -77,7 +77,7 @@
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request subst="true">
-          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Santa&nbsp;Barbara" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Chicago" content_type="application/x-www-form-urlencoded"> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request>
@@ -108,7 +108,7 @@
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request subst="true">
-          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Santa&nbsp;Barbara" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Chicago" content_type="application/x-www-form-urlencoded"> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request>
@@ -139,7 +139,7 @@
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request subst="true">
-          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Santa&nbsp;Barbara" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Chicago" content_type="application/x-www-form-urlencoded"> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <setdynvars sourcetype="random_number" start="1" end="1000">
@@ -277,7 +277,7 @@
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request>
-        <http url='/events/50' method='GET' version="1.1"></http>
+        <http url='/events/50/comments' method='GET' version="1.1"></http>
       </request>
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
@@ -286,7 +286,7 @@
         <var name="authenticity_token" />
       </setdynvars> 
       <request subst="true">
-          <http url='/events/50' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent&amp;comment[event_id]=50" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/50/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent&amp;comment[event_id]=50" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
@@ -295,8 +295,11 @@
           <http url='/' method='GET' version='1.1'> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
+      <setdynvars sourcetype="random_number" start="1" end="1000">
+        <var name="rndint" />
+      </setdynvars>
       <request>
-        <http url='/events/50' method='GET' version="1.1"></http>
+        <http url='/events/%%_rndint/comments' method='GET' version="1.1"></http>
       </request>
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
@@ -304,11 +307,8 @@
                         re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
         <var name="authenticity_token" />
       </setdynvars>
-      <setdynvars sourcetype="random_number" start="1" end="1000">
-        <var name="rndint" />
-      </setdynvars>
       <request subst="true">
-          <http url='/events/%%_rndint%%' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent&amp;comment[event_id]=%%_rndint%%" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/%%_rndint%%/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent&amp;comment[event_id]=%%_rndint%%" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
