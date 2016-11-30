@@ -1,0 +1,201 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/home/ec2-user/opt/tsung-1.5.0/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0">
+
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" use_controller_vm="true" maxusers='15000'/>
+  </clients>
+
+  <!-- Server side setup -->
+  <servers>
+      <server host="www.emergencyinteract-2.zgxk8jxz26.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+  </servers>
+
+
+  <load>
+    <arrivalphase phase="1" duration="100" unit="second">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="100" unit="second">
+      <users arrivalrate="8" unit="second"></users>
+    </arrivalphase> 
+   </load>
+
+  <options>
+    <!-- Set connection timeout to 2 seconds -->
+    <option name="global_ack_timeout" value="2000"></option>
+
+    <option type="ts_http" name="user_agent">
+      <user_agent probability="100">Mozilla/5.0 (Windows; U; Windows NT 5.2; fr-FR; rv:1.7.8) Gecko/20050511 Firefox/1.0.4</user_agent>
+    </option>
+  </options>
+
+  <sessions>
+    <!-- 
+    80% read
+        20% sign in & subscribe (all 20% sub to SB)
+            34% read HOME PAGE
+            33% read SPECIFIC EVENT (id 50)
+            33% read RANDOM EVENT
+        80% dont sign in
+            34% read HOME PAGE
+            33% read SPECIFIC EVENT (id 50)
+            33% read RANDOM EVENT
+    20% write
+        20% create EVENT
+            50% create event in NEW YORK
+            17% create event in LA
+            17% create event in SB
+            16% create event in SF
+            -->
+    <!-- asdf -->
+
+    <!-- READ & SIGN IN -->
+    <session name="read-subToSB-readhome" probability="5.44" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+    </session>
+    
+    <session name="read-subToSB-readspecific" probability="5.28" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+    </session>
+    
+    <session name="read-subToSB-readrand" probability="5.28" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+    </session>
+
+    <!-- READ & DONT SIGN IN -->
+    <session name="read-readhome" probability="30.76" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+    </session>
+    
+    <session name="read-readspecific" probability="30.12" type="ts_http">
+      <!-- visit home then go to specific event -->
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <http url='/events/50' version='1.1' method='GET'></http>
+      </request>
+    </session>
+    
+    <session name="read-readrand" probability="21.12" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <http url='/events' version='1.1' method='GET'></http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <setdynvars sourcetype="random_number" start="1" end="100">
+        <var name="rndint" />
+      </setdynvars>
+      <request subst="true">
+        <http url='/events/%%_rndint%%' version='1.1' method='GET'></http>
+      </request>
+    </session>
+
+
+
+
+
+
+    <!-- WRITE -->
+    <session name="write-createevent-NYhotspot" probability="1" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/new' version='1.1' method='GET'></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+      <request subst="true">
+          <http url='/events' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=NYemergency&amp;event[description]=bigemergency&amp;event[lat]=40.7128&amp;event[long]=-74.0059" content_type="application/x-www-form-urlencoded"></http>
+      </request>
+    </session>
+
+    <session name="write-createevent-LA" probability="0.34" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/new' version='1.1' method='GET'></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+      <request subst="true">
+          <http url='/events' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=LAemergency&amp;event[description]=emergency&amp;event[lat]=34.0522342&amp;event[long]=-118.2436849" content_type="application/x-www-form-urlencoded"></http>
+      </request>
+    </session>
+
+    <session name="write-createevent-SB" probability="0.34" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/new' version='1.1' method='GET'></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+      <request subst="true">
+          <http url='/events' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=SBemergency&amp;event[description]=emergency&amp;event[lat]=34.4208305&amp;event[long]=-119.6981901" content_type="application/x-www-form-urlencoded"></http>
+      </request>
+    </session>
+
+    <session name="write-createevent-SF" probability="0.32" type="ts_http">
+      <request>
+          <http url='/' method='GET' version='1.1'> </http>
+      </request>
+      <thinktime min="2" max="5" random="true"></thinktime>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/new' version='1.1' method='GET'></http>
+      </request>
+      <setdynvars sourcetype="eval"
+                  code='fun({Pid,DynVars})->
+                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
+                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
+        <var name="authenticity_token" />
+      </setdynvars> 
+      <request subst="true">
+          <http url='/events' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;event[title]=SFemergency&amp;event[description]=emergency&amp;event[lat]=37.7749295&amp;event[long]=-122.4194155" content_type="application/x-www-form-urlencoded"></http>
+      </request>
+    </session>
+
+  </sessions>
+
+</tsung>
+
