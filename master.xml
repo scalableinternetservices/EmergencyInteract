@@ -286,7 +286,7 @@
         <var name="authenticity_token" />
       </setdynvars> 
       <request subst="true">
-          <http url='/events/50/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent&amp;comment[event_id]=50" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/50/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
@@ -308,7 +308,7 @@
         <var name="authenticity_token" />
       </setdynvars>
       <request subst="true">
-          <http url='/events/%%_rndint%%/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent&amp;comment[event_id]=%%_rndint%%" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/%%_rndint%%/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
