@@ -1,6 +1,5 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  CITIESMAP = JSON.parse(File.read('public/cities.json'))
 
  
   # GET /events
@@ -9,18 +8,12 @@ class EventsController < ApplicationController
     if user_signed_in?
       locations = Subscription.where(:user_id => current_user.id).pluck("city")
       if locations.count > 0
-        @events = Rails.cache.fetch(locations, expires_in: 2.seconds) do
-           Event.search(params[:search]).where(location: locations).order("id desc").limit(10)
-        end
+           @events = Event.search(params[:search]).where(location: locations).order("id desc").limit(10)
       else
-        @events = Rails.cache.fetch("all", expires_in: 2.seconds) do
-          Event.search(params[:search]).order("id desc").limit(10);
-        end
+          @events = Event.search(params[:search]).order("id desc").limit(10);
       end
     else
-      @events = Rails.cache.fetch("all", expires_in: 2.seconds) do
-        Event.search(params[:search]).order("id desc").limit(10)
-      end
+        @events = Event.search(params[:search]).order("id desc").limit(10)
     end
   end
 
@@ -95,7 +88,7 @@ class EventsController < ApplicationController
     def find_region(lat,long)
       closest = ""
       minDist = 99999
-      citiesMap = EventsController::CITIESMAP
+      citiesMap = JSON.parse(File.read('public/cities.json'))
       citiesMap.each do |city|
         dist = haversineDist(lat,long,city['latitude'],city['longitude'])
         if dist < minDist

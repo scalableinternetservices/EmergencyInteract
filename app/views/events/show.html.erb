@@ -7,7 +7,6 @@
   </p>
 <% end %>
 
-<% cache(@event.id) do %>
 <p>
   <h3><%= @event.title %></h3>
   <strong><%= @event.followers? ? @event.followers : 0 %> Followers</strong>
@@ -31,7 +30,6 @@
   <br>
   <%= @event.location ? @event.location : "(none provided)"%>
 </p>
-<% end %>
 
 
  
