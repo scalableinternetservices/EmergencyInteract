@@ -3,10 +3,10 @@ subscriptions = []
 events = []
 comments = []
 
-User.destroy_all
 Subscription.destroy_all
-Event.destroy_all
+User.destroy_all
 Comment.destroy_all
+Event.destroy_all
 
 CITIESMAP = JSON.parse(File.read('public/cities.json'))
 
