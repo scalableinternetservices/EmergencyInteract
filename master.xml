@@ -325,7 +325,7 @@
       </setdynvars>
       <request>
         <dyn_variable name='authenticity_token'></dyn_variable>
-        <http url='/events/%%_rndint' method='GET' version="1.1"></http>
+        <http url='/events/%%_rndint%%' method='GET' version="1.1"></http>
       </request>
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
