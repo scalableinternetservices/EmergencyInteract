@@ -9,7 +9,7 @@
 
   <!-- Server side setup -->
   <servers>
-      <server host="www.emergency-testing.zgxk8jxz26.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+      <server host="www.emergencyinteract-4.zgxk8jxz26.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
 
 
@@ -34,7 +34,7 @@
 
   <sessions>
     <!-- 
-    read (80 total)
+             read (80 total)
         sign in & subscribe
             read HOME PAGE - 5
             read SPECIFIC EVENT - 5
@@ -107,18 +107,6 @@
           <http url='/users/sign_in' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;user[email]=%%_rndint%%@test.com&amp;user[password]=qwerty&amp;user[remember_me]=0" content_type="application/x-www-form-urlencoded"> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
-
-      <request>
-        <dyn_variable name='authenticity_token'></dyn_variable>
-        <http url='/subscriptions/new' version='1.1' method='GET'></http>
-      </request>
-      <setdynvars sourcetype="eval"
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
-                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars> 
-      
       <request subst="true">
           <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Chicago" content_type="application/x-www-form-urlencoded"> </http>
       </request>
@@ -150,18 +138,6 @@
           <http url='/users/sign_in' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;user[email]=%%_rndint%%@test.com&amp;user[password]=qwerty&amp;user[remember_me]=0" content_type="application/x-www-form-urlencoded"> </http>
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
-
-      <request>
-        <dyn_variable name='authenticity_token'></dyn_variable>
-        <http url='/subscriptions/new' version='1.1' method='GET'></http>
-      </request>
-      <setdynvars sourcetype="eval"
-                  code='fun({Pid,DynVars})->
-                        {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
-                        re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
-        <var name="authenticity_token" />
-      </setdynvars> 
-
       <request subst="true">
           <http url='/subscriptions/new' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;subscription[city]=Chicago" content_type="application/x-www-form-urlencoded"> </http>
       </request>
@@ -301,17 +277,22 @@
       </request>
       <thinktime min="2" max="5" random="true"></thinktime>
       <request>
-        <dyn_variable name='authenticity_token'></dyn_variable>
         <http url='/events/50' method='GET' version="1.1"></http>
       </request>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/50' version='1.1' method='GET'></http>
+      </request>
+
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
                         {ok,Val}=ts_dynvars:lookup(authenticity_token,DynVars),
                         re:replace(Val,"[+]","%2B",[global, {return,list}]) end.'>
         <var name="authenticity_token" />
-      </setdynvars> 
+      </setdynvars>
+
       <request subst="true">
-          <http url='/events/50/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent&amp;comment[event_id]=50" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/50/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonSPECIFICevent" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
@@ -324,8 +305,11 @@
         <var name="rndint" />
       </setdynvars>
       <request>
-        <dyn_variable name='authenticity_token'></dyn_variable>
         <http url='/events/%%_rndint' method='GET' version="1.1"></http>
+      </request>
+      <request>
+        <dyn_variable name='authenticity_token'></dyn_variable>
+        <http url='/events/%%_rndint' version='1.1' method='GET'></http>
       </request>
       <setdynvars sourcetype="eval"
                   code='fun({Pid,DynVars})->
@@ -334,7 +318,7 @@
         <var name="authenticity_token" />
       </setdynvars>
       <request subst="true">
-          <http url='/events/%%_rndint%%/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent&amp;comment[event_id]=%%_rndint%%" content_type="application/x-www-form-urlencoded"> </http>
+          <http url='/events/%%_rndint%%/comments' method='POST' version='1.1' contents="authenticity_token=%%_authenticity_token%%&amp;comment[body]=COMMENTonRANDOMevent" content_type="application/x-www-form-urlencoded"> </http>
       </request>
     </session>
 
